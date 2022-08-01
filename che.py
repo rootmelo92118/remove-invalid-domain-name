@@ -27,7 +27,7 @@ my_resolver = dns.resolver.Resolver()
 my_resolver.nameservers = [DNS_Server]
 listA = []
 while True:
-    inputData = input()
+    inputData = input("Domain name (input \"exit\" to escape this loop.) : ")
     if inputData == "exit":
         break
     else:
