@@ -22,6 +22,7 @@ def removeInvalidDomain(domain_list,remove_ip=None,domain_type="A",source_port=0
             pass
         else:
             listB.append(i)
+        print(dnsres)
     return listB
 
 
@@ -29,8 +30,9 @@ DNS_Server=input("DNS IP Address :")
 my_resolver = dns.resolver.Resolver()
 my_resolver.nameservers = [DNS_Server]
 listA = []
+print("Domain name (input \"exit\" to escape this loop.) : ")
 while True:
-    inputData = input("Domain name (input \"exit\" to escape this loop.) : ")
+    inputData = input()
     if inputData == "exit":
         break
     else:
