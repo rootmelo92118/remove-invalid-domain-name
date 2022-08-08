@@ -28,7 +28,7 @@ def removeInvalidDomain(domain_list,remove_ip=None,domain_type="A",source_port=0
     return listB
 
 
-DNS_Server=input("DNS IP Address :")      
+DNS_Server = input("DNS IP Address :")      
 my_resolver = dns.resolver.Resolver()
 my_resolver.nameservers = [DNS_Server]
 listA = []
