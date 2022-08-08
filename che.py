@@ -2,11 +2,11 @@ import dns.resolver
 
 def DNS_Query(domain_name,domain_type,source_ip=None,source_port=0):
 	try:
-		A= my_resolver.query(domain_name,domain_type,source=source_ip,source_port=source_port)   	
+		A = my_resolver.query(domain_name,domain_type,source=source_ip,source_port=source_port)   	
 		for i in A.response.answer:
 			return str(i.to_text())
 	except Exception as e:
-		return str(domain_name + " " + domain_type + " " + 'Error: unable to start thread')
+		return str(domain_name + " " + domain_type + " Error: unable to start thread")
 
   
 def removeInvalidDomain(domain_list,remove_ip=None,domain_type="A",source_port=0):
@@ -15,6 +15,8 @@ def removeInvalidDomain(domain_list,remove_ip=None,domain_type="A",source_port=0
         dnsres = DNS_Query(i,domain_type,source_port=source_port)
         if remove_ip != None:
             if remove_ip in dnsres:
+                pass
+            elif "Error: unable to start thread" in dnsres:
                 pass
             else:
                 listB.append(i)
