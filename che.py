@@ -2,7 +2,7 @@ import dns.resolver
 
 def DNS_Query(domain_name,domain_type,source_ip=None,source_port=0):
 	try:
-		A = my_resolver.query(domain_name,domain_type,source=source_ip,source_port=source_port)   	
+		A= my_resolver.query(domain_name,domain_type,source=source_ip,source_port=source_port)   	
 		for i in A.response.answer:
 			return str(i.to_text())
 	except Exception as e:
@@ -52,5 +52,11 @@ else:
 
 listC = removeInvalidDomain(listA,remove_ip,domain_type,source_port)
 
+str1 = ""
 for i in listC:
+    str1 = str1 + i + "\n"
     print(i)
+
+with open("outputdomain.txt","w") as f:
+    f.write(str1)
+    f.close()
