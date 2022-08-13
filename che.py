@@ -13,15 +13,13 @@ def removeInvalidDomain(domain_list,remove_ip=None,domain_type="A",source_port=0
     listB = []
     for i in domain_list:
         dnsres = DNS_Query(i,domain_type,source_port=source_port)
-        if remove_ip != None:
+	if "Error: unable to start thread" in dnsres:
+            pass
+        elif remove_ip != None:
             if remove_ip in dnsres:
-                pass
-            elif "Error: unable to start thread" in dnsres:
                 pass
             else:
                 listB.append(i)
-        elif "Error: unable to start thread" in dnsres:
-            pass
         else:
             listB.append(i)
         print(dnsres)
