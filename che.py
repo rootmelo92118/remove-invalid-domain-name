@@ -9,10 +9,13 @@ def DNS_Query(domain_name,domain_type,source_ip=None,source_port=0):
 		return str(domain_name + " " + domain_type + " Error: unable to start thread")
 
   
-def removeInvalidDomain(domain_list,remove_invalid_domains=True,remove_ip=None,domain_type="A",source_port=0):
+def removeInvalidDomain(domain_list,remove_invalid_domains=True,remove_ip=None,domain_type=None,source_port=0):
     listB = []
     for i in domain_list:
-        dnsres = DNS_Query(i,domain_type,source_port=source_port)
+        if domain_type == None:
+            dnsres = DNS_Query(i,source_port=source_port)
+        else:
+            dnsres = DNS_Query(i,domain_type,source_port=source_port)
         if "Error: unable to start thread" in dnsres and remove_invalid_domains == True:
             pass
         elif remove_ip != None:
@@ -38,7 +41,7 @@ while True:
     else:
         listA.append(inputData)
 
-remove_ip = input("移除解析為該IP的域名（預設為None）:")
+remove_ip = input("移除解析為該結果的域名（預設為None）:")
 if remove_ip == "":
     remove_ip = None
 remove_invalid_domains = input("移除無效域名（預設為True）:")
@@ -46,7 +49,7 @@ if remove_invalid_domains.lower() == "false":
     remove_invalid_domains = False
 else:
     remove_invalid_domains = True
-domain_type = input("域名解析結果域名解析結果紀錄種類（預設為A）:")
+domain_type = input("域名解析結果域名解析結果紀錄種類（預設為所有種類）:")
 if domain_type == "":
     domain_type = "A"
 source_port = input("DNS特定端口（預設為0）:")
