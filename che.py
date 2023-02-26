@@ -9,22 +9,26 @@ def DNS_Query(domain_name,domain_type,source_ip=None,source_port=0):
 		return str(domain_name + " " + domain_type + " Error: unable to start thread")
 
   
-def removeInvalidDomain(domain_list,remove_invalid_domains=True,remove_ip=None,domain_type=None,source_port=0):
+def removeInvalidDomain(domain_list,remove_invalid_domains=True,remove_ip=None,domain_type=None,source_port=0,reverse_mode=False):
     listB = []
     for i in domain_list:
         if domain_type == None:
             dnsres = DNS_Query(i,source_port=source_port)
         else:
             dnsres = DNS_Query(i,domain_type,source_port=source_port)
-        if "Error: unable to start thread" in dnsres and remove_invalid_domains == True:
-            pass
-        elif remove_ip != None:
-            if remove_ip in dnsres:
-                pass
+        if "Error: unable to start thread" in dnsres:
+            if reverse_mode == True or remove_invalid_domains != True:
+                listB.append(i)
+        elif reverse_mode != True:
+            if remove_ip != None:
+                if remove_ip in dnsres:
+                    pass
+                else:
+                    listB.append(i)
             else:
                 listB.append(i)
         else:
-            listB.append(i)
+            pass
         print(dnsres)
     return listB
 
@@ -57,8 +61,13 @@ if source_port == "":
     source_port = 0
 else:
     source_port = int(source_port)
+reverse_mode = input("反轉模式（提取無效域名，預設為False）:")
+if reverse_mode.lower() == "true":
+    reverse_mode = True
+else:
+    reverse_mode = False
 
-listC = removeInvalidDomain(listA,remove_invalid_domains,remove_ip,domain_type,source_port)
+listC = removeInvalidDomain(listA,remove_invalid_domains,remove_ip,domain_type,source_port,reverse_mode)
 
 str1 = ""
 for i in listC:
