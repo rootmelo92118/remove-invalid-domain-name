@@ -17,7 +17,7 @@ def removeInvalidDomain(domain_list,remove_invalid_domains=True,remove_ip=None,d
         else:
             dnsres = DNS_Query(i,domain_type,source_port=source_port)
         if "Error: unable to start thread" in dnsres:
-            if reverse_mode == True and remove_invalid_domains != True:
+            if remove_invalid_domains != True:
                 listB.append(i)
         elif remove_ip != None:
             if remove_ip in dnsres:
@@ -60,7 +60,7 @@ if source_port == "":
     source_port = 0
 else:
     source_port = int(source_port)
-reverse_mode = input("反轉模式（提取無效域名或被移除域名，預設為False）:")
+reverse_mode = input("反轉模式（輸出指定解析結果域名，預設為False）:")
 if reverse_mode.lower() == "true":
     reverse_mode = True
 else:
